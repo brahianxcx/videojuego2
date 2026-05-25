@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://8iouicjrlupl"]
+
+[ext_resource type="Texture2D" uid="uid://cw7dtdn4a4mou" path="res://assets/Vampires1_Idle_with_shadow.png" id="1_8bbe2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pn5ta"]
+atlas = ExtResource("1_8bbe2")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xtk8"]
+atlas = ExtResource("1_8bbe2")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0cfp"]
+atlas = ExtResource("1_8bbe2")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v34gu"]
+atlas = ExtResource("1_8bbe2")
+region = Rect2(192, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pn5ta")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2xtk8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k0cfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v34gu")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}]

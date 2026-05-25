@@ -2,11 +2,20 @@ extends CharacterBody2D
 
 @export var speed : float = 100
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var dialogue_box: Control = $"../CanvasLayer/DialogueBox"
+
 
 var last_direction: String = "down"
-
+var current_interactable: Node = null
 
 func _physics_process(delta: float) -> void:
+	
+	
+	if dialogue_box and dialogue_box.is_open:
+		velocity = Vector2.ZERO
+		play_idle_animation()
+		return
+		
 	var input_vector = Vector2.ZERO
 	
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -61,3 +70,22 @@ func play_idle_animation() -> void:
 		"left":
 			animated_sprite_2d.flip_h = true
 			animated_sprite_2d.play("idle_side")
+
+func set_current_interactable(target: Node) -> void:
+	current_interactable =  target
+	
+func clear_current_interactable(target: Node) -> void:
+	current_interactable =  null
+	
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact"):
+		if dialogue_box .is_open:
+			dialogue_box.hide_dialogue()
+			return
+		
+		if current_interactable and current_interactable.has_method("interact"):
+			var result = current_interactable.interact()
+		
+			if dialogue_box and result is Dictionary:
+				dialogue_box.show_dialogue(result.get("name",""),result.get("text",""))
+				
