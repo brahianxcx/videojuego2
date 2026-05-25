@@ -3,15 +3,29 @@ extends CharacterBody2D
 @export var speed : float = 100
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var dialogue_box: Control = $"../CanvasLayer/DialogueBox"
+@onready var inventory_ui: Control = $"../CanvasLayer/InventoryUI"
 
 
 var last_direction: String = "down"
 var current_interactable: Node = null
 
+
+
+func _ready() -> void:
+	InventoryManager.add_item("potion", "Pocion", 2)
+	InventoryManager.add_item("old_key", "Llave vieja", 1)
+	InventoryManager.add_item("map", "Mapa", 2)
+
 func _physics_process(delta: float) -> void:
 	
 	
+	
 	if dialogue_box and dialogue_box.is_open:
+		velocity = Vector2.ZERO
+		play_idle_animation()
+		return
+		
+	if inventory_ui and inventory_ui.is_open:
 		velocity = Vector2.ZERO
 		play_idle_animation()
 		return
@@ -78,14 +92,28 @@ func clear_current_interactable(target: Node) -> void:
 	current_interactable =  null
 	
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("inventory"):
+		if inventory_ui:
+			inventory_ui.toggle_inventory()
+			
+		return
+	
+	
+	
 	if event.is_action_pressed("interact"):
-		if dialogue_box .is_open:
-			dialogue_box.hide_dialogue()
+		if dialogue_box and dialogue_box.is_open:
+			dialogue_box.next_line()
 			return
 		
 		if current_interactable and current_interactable.has_method("interact"):
 			var result = current_interactable.interact()
 		
 			if dialogue_box and result is Dictionary:
-				dialogue_box.show_dialogue(result.get("name",""),result.get("text",""))
-				
+				dialogue_box.show_dialogue(result.get("name",""), result.get("text",[]))
+			
+			
+			await get_tree().physics_frame 
+			
+			
+			if inventory_ui:
+				inventory_ui.refresh_inventory()

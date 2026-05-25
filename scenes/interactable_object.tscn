@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqxgsmkjvh2i"]
+
+[ext_resource type="Script" uid="uid://oxgs8ytqmmur" path="res://scripts/interactable_object.gd" id="1_1cvqn"]
+[ext_resource type="Texture2D" uid="uid://2n4sduorioc3" path="res://assets/roguelikeSheet_transparent.png" id="1_gknyc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63ydw"]
+atlas = ExtResource("1_gknyc")
+region = Rect2(238, 85, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1cvqn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1t2qe"]
+size = Vector2(11.5, 13)
+
+[node name="InteractableObject" type="Node2D"]
+script = ExtResource("1_1cvqn")
+
+[node name="Visual" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_63ydw")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_1cvqn")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_1t2qe")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

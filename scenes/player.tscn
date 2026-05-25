@@ -311,23 +311,23 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ears2"]
-radius = 12.0
-height = 28.0
+radius = 9.0
+height = 34.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_fcnmq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(1.33081, 1.30468)
+scale = Vector2(1.26567, 1.16816)
 sprite_frames = SubResource("SpriteFrames_ik4h7")
 animation = &"idle_down"
 autoplay = "idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
+position = Vector2(-2, 0)
 shape = SubResource("CapsuleShape2D_ears2")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+zoom = Vector2(2.5, 2.5)
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
